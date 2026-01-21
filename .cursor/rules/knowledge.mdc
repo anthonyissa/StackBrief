@@ -1,0 +1,314 @@
+# StackBrief - Knowledge Base
+
+### MANDATORY
+
+ALWAYS UPDATE THIS FILE IF NEEDED AFTER AN EDIT IN THE PROJECT.
+
+> 📌 **Cursor Context File** - Always apply this context when working on this project.
+
+## 🎯 Project Overview
+
+**StackBrief** is a Substack newsletter aggregator and summarizer that delivers AI-powered digests directly to users via Telegram notifications.
+
+### Core Value Proposition
+
+Transform lengthy Substack newsletters into **bite-sized, emoji-rich bullet points** that are easy to read on-the-go, with a link to the full article for deeper reading.
+
+---
+
+## 🏗️ Architecture
+
+### Current Implementation
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                           STACKBRIEF                                    │
+│                                                                         │
+│  ┌──────────┐     ┌──────────────┐     ┌─────────────┐     ┌─────────┐│
+│  │  Config  │────▶│    Engine    │────▶│   OpenAI    │────▶│Telegram ││
+│  │  (env)   │     │  (Cron Job)  │     │ Summarizer  │     │   Bot   ││
+│  └──────────┘     └──────────────┘     └─────────────┘     └─────────┘│
+│       │                  │                    │                  │     │
+│       │                  ▼                    │                  │     │
+│       │          ┌──────────────┐             │                  │     │
+│       └─────────▶│  PostgreSQL  │◀────────────┘                  │     │
+│                  │   Database   │                                │     │
+│                  └──────────────┘                                │     │
+│                         │                                        │     │
+│                         ▼                                        │     │
+│               ┌──────────────────┐                               │     │
+│               │  Substack API    │                               │     │
+│               │    Client        │                               │     │
+│               └──────────────────┘                               │     │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 📦 Implemented Features
+
+### 1. ✅ Configuration System (`src/config.ts`)
+
+Environment-based configuration with:
+- List of Substack newsletters to follow
+- Telegram Bot token & Chat ID
+- Cron interval settings
+- OpenAI API settings (key, model, temperature)
+- PostgreSQL database URL
+
+### 2. ✅ Substack API Client (`src/substack-api/`)
+
+Complete TypeScript port of the Python substack_api library:
+- `Newsletter` class - fetch posts, search, podcasts, recommendations, authors
+- `Post` class - metadata, HTML content, plain text content, paywall detection
+- `User` class - profile data, subscriptions, handle redirects
+- `Category` class - browse newsletters by category
+- `SubstackAuth` class - cookie-based authentication for paywalled content
+
+### 3. ✅ Database Layer (`src/database/`)
+
+PostgreSQL database with:
+- **posts** table - stores all fetched posts with content
+- **newsletters** table - tracks monitored newsletters
+- **migrations** table - schema versioning
+- Duplicate detection by post_id and slug
+- Auto-initialization on startup
+
+### 4. ✅ AI Summarization (`src/openai/`)
+
+OpenAI-powered summarization:
+- Generates 4 emoji-rich bullet points per post
+- Configurable model (default: gpt-4o-mini)
+- Fallback to basic extraction if AI unavailable
+- Content truncation for token management
+
+### 5. ✅ Telegram Bot Integration (`src/telegram/`)
+
+Full Telegram Bot API integration:
+- Send individual digest items
+- Send combined digests
+- HTML message formatting
+- Rate limiting protection
+- Connection testing
+
+### 6. ✅ Engine & Scheduler (`src/engine.ts`)
+
+Main orchestration with:
+- Cron-based scheduling (configurable interval)
+- Process all newsletters in sequence
+- Duplicate detection before processing
+- Graceful shutdown handling
+
+---
+
+## 🔧 Tech Stack
+
+| Component        | Technology                |
+| ---------------- | ------------------------- |
+| Runtime          | Bun                       |
+| Language         | TypeScript (strict mode)  |
+| Substack Client  | Custom (TypeScript)       |
+| Database         | PostgreSQL + `postgres`   |
+| AI               | OpenAI API (`openai`)     |
+| Telegram         | Custom client (fetch API) |
+| Scheduler        | Native `setInterval`      |
+| Config           | Environment variables     |
+
+---
+
+## 📂 File Structure
+
+```
+src/
+├── index.ts              # Re-exports substack-api
+├── config.ts             # App configuration from env
+├── engine.ts             # Main engine & cron scheduler
+├── run-once.ts           # Single run (no cron)
+├── test.ts               # API test script
+│
+├── substack-api/         # ✅ Substack API Client
+│   ├── index.ts          # Exports
+│   ├── types.ts          # TypeScript interfaces
+│   ├── constants.ts      # Headers, URLs, defaults
+│   ├── auth.ts           # SubstackAuth class
+│   ├── newsletter.ts     # Newsletter class
+│   ├── post.ts           # Post class
+│   ├── user.ts           # User class
+│   └── category.ts       # Category class
+│
+├── database/             # ✅ PostgreSQL Database
+│   ├── index.ts          # Exports
+│   ├── types.ts          # Database types
+│   ├── init.ts           # Schema initialization
+│   └── queries.ts        # CRUD operations
+│
+├── openai/               # ✅ AI Summarization
+│   ├── index.ts          # Exports
+│   ├── types.ts          # OpenAI types
+│   ├── constants.ts      # Prompts, defaults
+│   └── client.ts         # OpenAIClient class
+│
+└── telegram/             # ✅ Telegram Bot
+    ├── index.ts          # Exports
+    ├── types.ts          # Telegram types
+    ├── constants.ts      # API URLs, limits
+    └── client.ts         # TelegramClient class
+```
+
+---
+
+## ⚙️ Environment Variables
+
+```env
+# Database (PostgreSQL)
+DATABASE_URL=postgres://user:pass@host:5432/dbname
+
+# Telegram Bot
+TELEGRAM_BOT_TOKEN=your-bot-token
+TELEGRAM_CHAT_ID=your-chat-id
+
+# OpenAI
+OPENAI_API_KEY=your-openai-key
+OPENAI_MODEL=gpt-4o-mini  # optional, default: gpt-4o-mini
+```
+
+---
+
+## 🚀 NPM Scripts
+
+| Command           | Description                          |
+| ----------------- | ------------------------------------ |
+| `bun run start`   | Start cron scheduler (runs forever)  |
+| `bun run job`     | Run once (no cron)                   |
+| `bun run test`    | Run API test script                  |
+| `bun run typecheck` | TypeScript type checking           |
+
+---
+
+## 📝 Telegram Message Format
+
+```
+📰 Newsletter Name (21/01/2026)
+Post Title
+
+• 🔑 Key point one from the article
+• 💡 Important insight or idea
+• 📊 Any data or statistics mentioned
+• 🎯 Main takeaway or conclusion
+
+🔗 Read full article
+```
+
+---
+
+## 🔄 Workflow
+
+1. **Startup**: 
+   - Load config from environment
+   - Initialize PostgreSQL connection
+   - Create tables if not exist
+   - Initialize OpenAI & Telegram clients
+
+2. **Job Run** (cron or manual):
+   - For each configured newsletter:
+     - Fetch latest N posts from Substack
+     - For each post:
+       - Check if already in database
+       - If new: fetch full content
+       - Save to database
+       - Generate AI summary (if enabled)
+       - Send Telegram notification (if enabled)
+   - Log summary statistics
+
+3. **Repeat**: Wait for next cron interval
+
+---
+
+## 📌 Key Types Reference
+
+```typescript
+// Processed post (engine.ts)
+interface ProcessedPost {
+  newsletterName: string;
+  newsletterUrl: string;
+  postId: number;
+  slug: string;
+  title: string;
+  subtitle?: string;
+  url: string;
+  date: string;
+  content: string | null;
+  wordCount?: number;
+  isPaywalled: boolean;
+}
+
+// Digest item for Telegram (telegram/types.ts)
+interface DigestItem {
+  newsletterName: string;
+  title: string;
+  url: string;
+  bulletPoints: string[];
+  date?: string;
+}
+
+// App configuration (config.ts)
+interface AppConfig {
+  substacks: SubstackConfig[];
+  cronIntervalMinutes: number;
+  postsPerNewsletter: number;
+  telegram: { enabled, botToken, chatId };
+  database: { enabled, url };
+  openai: { enabled, apiKey, model, maxTokens, temperature };
+}
+```
+
+---
+
+## 🎨 Design Principles
+
+1. **Simplicity First**: Keep the digest short and scannable
+2. **Mobile-Friendly**: Optimized for Telegram on mobile
+3. **Non-Intrusive**: Respect user attention with quality over quantity
+4. **Reliable**: Never send duplicates, handle failures gracefully
+5. **Configurable**: Easy to add/remove newsletters via config
+
+---
+
+## 📋 Development Guidelines
+
+- Write code in **English** (comments, variables, errors)
+- Use TypeScript **strict mode**
+- Follow **Clean Code** practices
+- Add comprehensive **logging** for debugging
+- Prefer **readability** over premature optimization
+- All database operations are **async**
+- Handle errors gracefully with fallbacks
+
+---
+
+## ✅ MVP Status
+
+| Feature               | Status |
+| --------------------- | ------ |
+| Substack API Client   | ✅ Done |
+| Configuration System  | ✅ Done |
+| PostgreSQL Database   | ✅ Done |
+| OpenAI Summarization  | ✅ Done |
+| Telegram Integration  | ✅ Done |
+| Cron Scheduler        | ✅ Done |
+| Main Engine           | ✅ Done |
+
+---
+
+## 🔗 API Endpoints Used
+
+| Endpoint | Purpose |
+|----------|---------|
+| `{url}/api/v1/archive` | Get newsletter posts |
+| `{url}/api/v1/posts/{slug}` | Get single post data |
+| `{url}/api/v1/recommendations/from/{id}` | Get recommendations |
+| `{url}/api/v1/publication/users/ranked` | Get authors |
+| `https://substack.com/api/v1/user/{username}/public_profile` | User profile |
+| `https://substack.com/api/v1/categories` | List categories |
+| `https://substack.com/api/v1/category/public/{id}/all` | Category newsletters |
+| `https://substack.com/api/v1/publication/search` | Search publications |
