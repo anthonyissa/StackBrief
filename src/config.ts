@@ -62,6 +62,11 @@ export const config: AppConfig = {
       url: "https://coinmetrics.substack.com",
       enabled: true,
     },
+    {
+      name: "Posthog",
+      url: "https://newsletter.posthog.com/",
+      enabled: true,
+    },
     // Add more substacks here:
     // {
     //   name: "Example Newsletter",
