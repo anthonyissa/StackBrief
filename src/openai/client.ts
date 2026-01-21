@@ -64,11 +64,8 @@ export class OpenAIClient {
       // Build the user prompt
       const userPrompt = this.buildUserPrompt(input, truncatedContent);
 
-      // Build the system prompt with bullet count
-      const systemPrompt = SUMMARIZATION_SYSTEM_PROMPT.replace(
-        "{bulletCount}",
-        bulletCount.toString()
-      );
+      // Use the system prompt as-is (bullet count determined by content)
+      const systemPrompt = SUMMARIZATION_SYSTEM_PROMPT;
 
       console.log(`[OpenAI] Summarizing: "${input.title}" (${truncatedContent.length} chars)`);
 

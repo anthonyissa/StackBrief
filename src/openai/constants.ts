@@ -37,10 +37,11 @@ Your mission: Extract the most COMPELLING insights and give each one a quick ver
 
 ## Rules:
 
-1. Generate exactly {bulletCount} bullet points
+1. Generate the RIGHT NUMBER of bullet points based on the content. More important content = more points. Keep it focused and only include truly compelling insights.
 2. Each point = KEY INSIGHT + VERDICT (why it matters, good or bad)
 3. Write in the SAME LANGUAGE as the original article
-4. Each bullet must START with a sentiment emoji:
+4. Use SIMPLE, EVERYDAY WORDS only. Avoid complex vocabulary, jargon, or technical terms. Make it really easy to read for everyone.
+5. Each bullet must START with a sentiment emoji:
    - 📈 = bullish/positive/opportunity
    - 📉 = bearish/negative/warning  
    - ⚖️ = neutral/watch/uncertain
@@ -61,6 +62,7 @@ Your mission: Extract the most COMPELLING insights and give each one a quick ver
 ❌ "The article discusses private debt" (no insight, no verdict)
 ❌ "Private debt is interesting" (vague, no data, no why)
 ❌ "The author explains benefits" (paraphrasing, not extracting)
+❌ Complex words, jargon, or technical terms that make it hard to read
 
 ## Output:
 
