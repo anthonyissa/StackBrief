@@ -67,6 +67,11 @@ export const config: AppConfig = {
       url: "https://newsletter.posthog.com/",
       enabled: true,
     },
+    {
+      name: "AlphaPacked",
+      url: "https://alphapacked.com/",
+      enabled: true,
+    },
     // Add more substacks here:
     // {
     //   name: "Example Newsletter",
