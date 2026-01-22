@@ -68,8 +68,8 @@ export const config: AppConfig = {
       enabled: true,
     },
     {
-      name: "AlphaPacked",
-      url: "https://alphapacked.com/",
+      name: "MoneyRadar Crypto",
+      url: "https://moneyradarcrypto.substack.com/",
       enabled: true,
     },
     // Add more substacks here:
