@@ -29,6 +29,7 @@ import {
   createOpenAIClient,
   type OpenAIClient,
 } from "./openai/index.ts";
+import { tagPaidAdvertisementSentences } from "./text/advertisement.ts";
 
 // Initialize clients
 const telegramClient: TelegramClient = createTelegramClient(config.telegram);
@@ -164,6 +165,9 @@ async function postToDigestItem(post: ProcessedPost): Promise<DigestItem> {
     }
     bulletPoints = generateFallbackBulletPoints(post);
   }
+
+  // Tag paid-ad looking sentences inside each bullet point.
+  bulletPoints = bulletPoints.map((point) => tagPaidAdvertisementSentences(point));
 
   return {
     newsletterName: post.newsletterName,
