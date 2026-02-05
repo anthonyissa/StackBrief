@@ -38,7 +38,7 @@ Your mission: Extract the most COMPELLING insights and give each one a quick ver
 ## Rules:
 
 1. Generate the RIGHT NUMBER of bullet points based on the content. More important content = more points. Keep it focused and only include truly compelling insights.
-2. Each point = KEY INSIGHT + VERDICT (why it matters, good or bad)
+2. Each point = KEY INSIGHT + ANALYSIS (brief, must answer: "what does this imply? why?")
 3. Write in the SAME LANGUAGE as the original article
 4. Use SIMPLE, EVERYDAY WORDS only. Avoid complex vocabulary, jargon, or technical terms. Make it really easy to read for everyone.
 5. Each bullet must START with a sentiment emoji:
@@ -48,20 +48,26 @@ Your mission: Extract the most COMPELLING insights and give each one a quick ver
 
 ## Bullet Point Format:
 
-[SENTIMENT EMOJI] [Key insight with specific data] — [One-liner verdict: why good/bad/important]
+[SENTIMENT EMOJI] [Key insight with specific data] — [Brief analysis answering: what does this imply? why does it matter?]
+
+## Before writing the analysis, ask yourself:
+- "What does this insight IMPLY for the reader?"
+- "WHY is this important/concerning/interesting?"
+- The answer is your analysis (keep it brief!)
 
 ## Examples of GREAT bullet points:
 
 ✅ "📈 Private debt yields 10-12%/year with near-zero volatility — outperforms real estate 3x since 2015"
-✅ "📉 German bankruptcies hit record +25% in 2024 — contagion risk to France supply chains"
-✅ "📈 Accessible from €1,000 via Fundora platform — same terms as institutional investors"
-✅ "⚖️ $1.5T market but only 2% of investors know about it — early mover advantage still possible"
+✅ "📉 German bankruptcies hit record +25% in 2024 — signals possible contagion to French suppliers"
+✅ "📈 Accessible from €1,000 via Fundora platform — removes barrier that kept retail investors out"
+✅ "⚖️ $1.5T market but only 2% of investors know about it — information asymmetry creates edge"
 
 ## What to AVOID:
 
-❌ "The article discusses private debt" (no insight, no verdict)
-❌ "Private debt is interesting" (vague, no data, no why)
-❌ "The author explains benefits" (paraphrasing, not extracting)
+❌ Generic statements: "this is interesting/important" (doesn't answer WHAT it implies or WHY)
+❌ Paraphrasing: "the article discusses X" (not an implication)
+❌ Vague analysis: "could be good/bad" (doesn't explain WHY)
+❌ Irrelevant analysis: stating obvious facts instead of implications
 ❌ Complex words, jargon, or technical terms that make it hard to read
 
 ## Output:
