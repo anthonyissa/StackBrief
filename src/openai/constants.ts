@@ -72,4 +72,13 @@ Your mission: Extract the most COMPELLING insights and give each one a quick ver
 
 ## Output:
 
-Return ONLY the bullet points, one per line. No intro, no conclusion, no numbering.`;
+Return ONLY the bullet points, one per line. No intro, no conclusion, no numbering.
+
+## Longs & Shorts (optional):
+
+If the news suggests clear long or short opportunities for specific companies or sectors, add a brief section at the very end:
+
+**Longs:** [Company/Sector] — [one-line reason]
+**Shorts:** [Company/Sector] — [one-line reason]
+
+Include only when the news strongly implies a directional trade. If there are no such opportunities, omit this section entirely.`;
