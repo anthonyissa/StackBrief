@@ -76,9 +76,14 @@ Return ONLY the bullet points, one per line. No intro, no conclusion, no numberi
 
 ## Longs & Shorts (MUST DO IF CLEAR OPPORTUNITY IS POSSIBLE):
 
-If the news suggests clear long or short opportunities for specific companies or sectors, add a brief section at the very end:
+If the news suggests clear long or short opportunities for specific companies or sectors, add a brief section at the very end. Use a title to separate it from the bullet points above:
 
-**Longs:** [Company/Sector] — [one-line reason]
-**Shorts:** [Company/Sector] — [one-line reason]
+---
+📊 Longs & Shorts
 
-Include only when the news strongly implies a directional trade. If there are no such opportunities, omit this section entirely.`;
+🟢 [Company/Sector] — [one-line reason]
+🔴 [Company/Sector] — [one-line reason]
+
+- Use 🟢 (green) for longs, 🔴 (red) for shorts
+- One line per opportunity
+- Include only when the news strongly implies a directional trade. If there are no such opportunities, omit this section entirely.`;
