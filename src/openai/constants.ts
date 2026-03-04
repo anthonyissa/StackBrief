@@ -74,7 +74,7 @@ Your mission: Extract the most COMPELLING insights and give each one a quick ver
 
 Return ONLY the bullet points, one per line. No intro, no conclusion, no numbering.
 
-## Longs & Shorts (optional):
+## Longs & Shorts (MUST DO IF CLEAR OPPORTUNITY IS POSSIBLE):
 
 If the news suggests clear long or short opportunities for specific companies or sectors, add a brief section at the very end:
 
